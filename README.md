@@ -52,8 +52,8 @@ Ideas: an advisory pre-call hook so an agent can ask for a slot before it calls,
 
 ## The thinking behind this
 
-- [Hold, never drop: pacing agent traffic to shared services](docs/hold-never-drop.md), the whitepaper.
-- [One alarm, not one write per request](docs/one-alarm-flush.md), the short version of the persistence lesson.
+- [Hold, never drop: pacing agent traffic to shared services](https://gist.github.com/dustintaylored/45a636576e99de46493b4d13a37ad60e), the whitepaper (copy in `docs/`).
+- [One alarm, not one write per request](https://gist.github.com/dustintaylored/6147b5ecf0c696326ce169b7ed9d685b), the short version of the persistence lesson (copy in `docs/`).
 
 ## Credits
 

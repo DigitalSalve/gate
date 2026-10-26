@@ -1,0 +1,30 @@
+{
+  // the actor runtime app config. wrangler.jsonc ONLY - the actor runtime rejects wrangler.toml.
+  // Allowed top-level keys here: name, main, compatibility_date, compatibility_flags,
+  // durable_objects, migrations, vars. No "routes" (the actor runtime rejects it); ingress is the proxy the proxy host.
+  "name": "gate",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "durable_objects": {
+    "bindings": [
+      { "name": "LIMITER", "class_name": "RateLimiter" },
+      { "name": "METER", "class_name": "Meter" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["RateLimiter"] },
+    { "tag": "v2", "new_sqlite_classes": ["Meter"] }
+  ],
+  // Upstream table. Adding a service is a config change + deploy, never a code change (change 5).
+  // rate = tokens/s, burst = bucket capacity, dedupe = fingerprint writes,
+  // store_bodies = keep the response for a 60 s dedupe replay (NEVER true for secrets).
+  // caller_rate/caller_burst (change 6) = optional per-caller cell <upstream>@<hash16> under the
+  // upstream cell; absent => one shared cell (secrets, ci).
+  // tracker shared cell 20/s burst 40: owner ruling 2026-10-26 on change 12, "be generous until we have
+  // numbers to dial this in". Caller cells stay 4/s burst 10; idle caller cells are pruned after 24 h.
+  // ci (2026-10-26): the CI farm CI farm daemon on the CI host, GET-only through the gate (the proxy sends
+  // POST .../notes straight to the CI daemon from the bridge host), so no write dedupe and never a stored body.
+  "vars": {
+    "UPSTREAMS": "{\"tracker\":{\"target\":\"http://192.0.2.54:3000\",\"rate\":20,\"burst\":40,\"caller_rate\":4,\"caller_burst\":10,\"dedupe\":true,\"store_bodies\":true},\"secrets\":{\"target\":\"http://192.0.2.50:80\",\"rate\":5,\"burst\":20,\"dedupe\":true,\"store_bodies\":false},\"ci\":{\"target\":\"http://192.0.2.62:8750\",\"rate\":5,\"burst\":10,\"dedupe\":false,\"store_bodies\":false}}"
+  }
+}

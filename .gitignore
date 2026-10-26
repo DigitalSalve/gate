@@ -1,0 +1,7 @@
+.bundle/
+node_modules/
+.env*
+*.local.md
+*.log
+.worktrees/
+build/

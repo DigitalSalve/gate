@@ -3,28 +3,7 @@
 // (types are stripped, never checked) and the test runner uses node's native type stripping.
 // These declarations exist so editors and `tsc --noEmit` have something to bind to.
 
-declare interface DurableObjectStorage {
-  get<T = unknown>(key: string): Promise<T | undefined>;
-  put<T = unknown>(key: string, value: T): Promise<void>;
-  delete(key: string): Promise<boolean>;
-  deleteAll(): Promise<void>;
-  list<T = unknown>(options?: { prefix?: string; limit?: number; reverse?: boolean }): Promise<Map<string, T>>;
-  setAlarm(scheduledTime: number | Date): Promise<void>;
-  getAlarm(): Promise<number | null>;
-  deleteAlarm(): Promise<void>;
-  transaction?<T>(fn: (txn: DurableObjectTransaction) => Promise<T>): Promise<T>;
-}
-
-declare interface DurableObjectTransaction {
-  get<T = unknown>(key: string): Promise<T | undefined>;
-  put<T = unknown>(key: string, value: T): Promise<void>;
-  delete(key: string): Promise<boolean>;
-}
-
-declare interface DurableObjectState {
-  storage: DurableObjectStorage;
-  blockConcurrencyWhile?<T>(fn: () => Promise<T>): Promise<T>;
-}
+/// <reference path="../packages/meter/types.d.ts" />
 
 declare interface DurableObjectId {
   toString(): string;

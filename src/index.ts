@@ -21,10 +21,10 @@
 // The Meter DO (src/meter.ts) owns the /via admission model.
 // Both keep their state in actor memory and flush it once per interval (change 8, src/persist.ts).
 
-import { Meter, WAIT_CAP_MS, DEDUPE_BODY_CAP, DEFAULT_BURST } from "./meter.ts";
+import { Meter, WAIT_CAP_MS, DEDUPE_BODY_CAP, DEFAULT_BURST } from "../packages/meter/meter.ts";
 import { buildForwardHeaders, buildResponseHeaders, headersToObject } from "./headers.ts";
 import { callerIdentity, fingerprint, fromBase64, readBody, toBase64, sleep } from "./util.ts";
-import { FLUSH_INTERVAL_MS, Once, Persistence, exclusive, startLoad } from "./persist.ts";
+import { FLUSH_INTERVAL_MS, Once, Persistence, exclusive, startLoad } from "../packages/meter/persist.ts";
 
 export { Meter };
 

@@ -3,7 +3,7 @@
 import { test, beforeEach, afterEach } from "node:test";
 import assert from "node:assert/strict";
 import worker, { cellName, type Env } from "../src/index.ts";
-import { Meter } from "../src/meter.ts";
+import { Meter } from "../packages/meter/meter.ts";
 import { callerIdentity } from "../src/util.ts";
 
 const UPSTREAMS = JSON.stringify({

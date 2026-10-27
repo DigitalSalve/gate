@@ -7,7 +7,7 @@
     "node": ">=22.6"
   },
   "scripts": {
-    "test": "node --test test/*.test.ts",
+    "test": "node --test test/*.test.ts packages/meter/test/*.test.ts",
     "build": "esbuild src/index.ts --bundle --format=esm --target=es2022 --outfile=.bundle/bundle.js"
   },
   "devDependencies": {

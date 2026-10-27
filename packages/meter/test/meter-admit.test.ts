@@ -1,7 +1,7 @@
 // change 6 amendment contract meter-admit-wait-budget: /admit honours an optional max_wait_ms.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { Meter, WAIT_CAP_MS, waitBudget } from "../src/meter.ts";
+import { Meter, WAIT_CAP_MS, waitBudget } from "../meter.ts";
 
 class MemoryStorage {
   map = new Map<string, unknown>();

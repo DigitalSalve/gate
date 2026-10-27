@@ -1,0 +1,25 @@
+{
+  "name": "gate-meter",
+  "version": "0.1.0",
+  "description": "Reserve-ahead token bucket for a durable actor: release times instead of rejections, write dedupe, counters, one-alarm interval flush, idle self-prune",
+  "license": "MIT",
+  "type": "module",
+  "main": "meter.ts",
+  "exports": {
+    ".": "./meter.ts",
+    "./persist": "./persist.ts"
+  },
+  "files": [
+    "meter.ts",
+    "persist.ts",
+    "util.ts",
+    "types.d.ts",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.6"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.ts"
+  }
+}

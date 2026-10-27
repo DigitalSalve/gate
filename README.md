@@ -17,7 +17,7 @@ What a caller gets:
 ```bash
 # install and run
 npm install            # one dev dependency, the bundler
-npm test               # 92 tests, node >= 22.6, no framework
+npm test               # 92 tests, node >= 22.6, no framework; packages/meter has its own npm test
 
 # edit wrangler.jsonc: one entry per upstream in vars.UPSTREAMS
 #   target        where the service lives
@@ -40,7 +40,7 @@ The reverse proxy lists the gate first and the service second for the metered pa
 4. Identical writes from the same caller inside 60 s are answered from the stored first response.
 5. Bucket and counter state live in actor memory; one alarm per actor flushes dirty state every 10 s in a single transaction. Idle per-caller actors prune themselves after 24 h.
 
-Source layout: `src/index.ts` (entry, routing, upstream table, two-level admission), `src/meter.ts` (bucket, counters, dedupe, prune), `src/persist.ts` (memory state and the flush alarm), `src/headers.ts`, `src/util.ts`, and `test/` for each of them.
+Source layout: `src/index.ts` (entry, routing, upstream table, two-level admission), `src/headers.ts`, `src/util.ts`, and `test/` for each of them. The pacing core is its own package, `packages/meter` (the bucket, counters, dedupe, the memory state with its flush alarm, and the idle prune, with its own tests and README), and the gate imports it from there; it can be installed on its own.
 
 ## Status
 
@@ -52,8 +52,12 @@ Ideas: an advisory pre-call hook so an agent can ask for a slot before it calls,
 
 ## The thinking behind this
 
-- [Hold, never drop: pacing agent traffic to shared services](https://gist.github.com/dustintaylored/45a636576e99de46493b4d13a37ad60e), the whitepaper (copy in `docs/`).
-- [One alarm, not one write per request](https://gist.github.com/dustintaylored/6147b5ecf0c696326ce169b7ed9d685b), the short version of the persistence lesson (copy in `docs/`).
+- [Hold, never drop: pacing agent traffic to shared services](https://gist.github.com/dustintaylored/45a636576e99de46493b4d13a37ad60e), the whitepaper.
+- [One alarm, not one write per request](https://gist.github.com/dustintaylored/6147b5ecf0c696326ce169b7ed9d685b), the short version of the persistence lesson.
+
+## About this repository
+
+This public repository is a generated export of a private source: the code and the tests are copied out by a declared rule set with private material stripped, and nothing here is edited by hand. A pull request is answered by a change in the source and a fresh export, so its diff is welcome and its commits are not kept. The papers live only on their gists, linked below; the repository keeps no copies.
 
 ## Credits
 

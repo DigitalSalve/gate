@@ -2,8 +2,8 @@
 // pruned after 24 h; shared cells never). A counting fake storage proves what is deleted and armed.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { Meter, IDLE_PRUNE_MS } from "../src/meter.ts";
-import { FLUSH_INTERVAL_MS } from "../src/persist.ts";
+import { Meter, IDLE_PRUNE_MS } from "../meter.ts";
+import { FLUSH_INTERVAL_MS } from "../persist.ts";
 
 class Storage {
   map = new Map<string, unknown>();

@@ -18,8 +18,8 @@
 // Every /via response names the deciding cell in `X-Gate-Cell`.
 //
 // The RateLimiter DO (advisory /limit, used by the change 7 agent hook) keeps its API.
-// The Meter DO (src/meter.ts) owns the /via admission model.
-// Both keep their state in actor memory and flush it once per interval (change 8, src/persist.ts).
+// The Meter DO (packages/meter/meter.ts) owns the /via admission model.
+// Both keep their state in actor memory and flush it once per interval (change 8, packages/meter/persist.ts).
 
 import { Meter, WAIT_CAP_MS, DEDUPE_BODY_CAP, DEFAULT_BURST } from "../packages/meter/meter.ts";
 import { buildForwardHeaders, buildResponseHeaders, headersToObject } from "./headers.ts";
